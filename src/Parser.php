@@ -8,7 +8,8 @@ class Parser
      */
     protected $options = [
         'line_ending' => "\n",
-        'emit_whitespace' => false
+        'emit_whitespace' => false,
+        'buffer_size' => 8192,
     ];
 
     /**
@@ -20,38 +21,66 @@ class Parser
      * @var bool
      */
     protected $gzipSupported;
+  
+    /**
+     * @var \JsonCollectionParser\Listener
+     */
+    protected $listener;
 
     /**
      * @var resource
      */
     protected $stream;
+  
+    protected $fileStat;
 
     public function __construct()
     {
         $this->gzipSupported = extension_loaded('zlib');
+        $this->listener = null;
     }
 
     /**
      * @param string|resource $input File path or resource
-     * @param callback|callable $itemCallback Callback
+     * @param callback|callable|Listener $itemCallbackOrListener Callback
      * @param bool $assoc Parse as associative arrays
      *
      * @throws \Exception
      */
-    public function parse($input, $itemCallback, $assoc = true)
+    public function parse($input, $itemCallbackOrListener, $assoc = true)
     {
-        $this->checkCallback($itemCallback);
-
-        $stream = $this->openStream($input);
+        $this->stream = $stream = $this->openStream($input);
+        $this->fileStat = stat($input);
+        if (null !== ($offset = $this->getOption('offset'))) {
+          if (-1 == fseek($stream, $offset)) {
+            throw new \Exception('Can\'t set correct offset of ' . $offset . ' bytes for the file');
+          }
+        }
 
         try {
-            $listener = new Listener($itemCallback, $assoc);
+            if ($itemCallbackOrListener instanceof Listener) {
+              $this->setListener($itemCallbackOrListener);
+            }
+          
+            if ($this->listener === null) {
+              $this->checkCallback($itemCallbackOrListener);
+              $this->setListener(new Listener($itemCallbackOrListener, $assoc));
+            }
+            
+            $this->listener->setParser($this);
             $this->parser = new \JsonStreamingParser\Parser(
                 $stream,
-                $listener,
+                $this->listener,
                 $this->getOption('line_ending'),
-                $this->getOption('emit_whitespace')
+                $this->getOption('emit_whitespace'),
+                $this->getOption('buffer_size')
             );
+          
+            if ($this->eof()) {
+              // Set the true EOF
+              fseek($this->stream, 0, SEEK_END);
+            }
+            
             $this->parser->parse();
         } catch (\Exception $e) {
             $this->gzipSupported ? gzclose($stream) : fclose($stream);
@@ -137,5 +166,33 @@ class Parser
         } else {
             return null;
         }
+    }
+    
+    public function setListener(Listener $listener) {
+      $this->listener = $listener;
+    }
+    
+    public function eof() {
+      $eof = feof($this->stream);
+      if (!$eof) {
+        $pos = $this->getPosition();
+        stream_get_line($this->stream, $this->getOption('buffer_size'), $this->getOption('line_ending'));
+        $endpos = $this->getPosition();
+        $eof = $endpos === $pos;
+        
+        // rewind back
+        fseek($this->stream, $pos);
+      }
+      
+      return $eof;
+    }
+    
+    public function getPosition() {
+      return ftell($this->stream);
+    }
+    
+    public function getProgressPercent() {
+      // 100 is max
+      return (($this->getPosition() * 100) / $this->fileStat['size']);
     }
 }

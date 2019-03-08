@@ -42,6 +42,13 @@ class Listener implements \JsonStreamingParser\Listener
      * @var bool
      */
     protected $assoc;
+  
+    protected $currentFilePosition;
+  
+    /**
+     * @var \JsonCollectionParser\Parser
+     */
+    protected $parser;
 
     /**
      * @param callback|callable $callback callback for parsed collection item
@@ -85,7 +92,7 @@ class Listener implements \JsonStreamingParser\Listener
             $obj = $this->stack[0][0];
             array_shift($this->stack[0]);
 
-            call_user_func($this->callback, $obj);
+            call_user_func($this->callback, $obj, $this);
         }
     }
 
@@ -161,5 +168,36 @@ class Listener implements \JsonStreamingParser\Listener
      */
     public function whitespace($whitespace)
     {
+    }
+    
+    public function filePosition($lineNumber, $charNumber) {
+      $this->currentFilePosition['line'] = $lineNumber;
+      $this->currentFilePosition['char'] = $charNumber;
+    }
+    
+    public function getFilePositionLine() {
+      return $this->currentFilePosition['line'];
+    }
+    
+    public function getFilePositionChar() {
+      return $this->currentFilePosition['char'];
+    }
+    
+    public function getFilePositionAbsolute() {
+      return $this->getFilePositionLine() * $this->getFilePositionChar();
+    }
+  
+    /**
+     * @return Parser
+     */
+    public function getParser() {
+      return $this->parser;
+    }
+  
+    /**
+     * @return \JsonCollectionParser\Parser
+     */
+    public function setParser(Parser $parser) {
+      $this->parser = $parser;
     }
 }
