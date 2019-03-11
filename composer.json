@@ -17,7 +17,7 @@
     ],
     "require": {
         "php": "^7.1",
-        "p1ratrulezzz/json-streaming-parser": ">=6.0.5"
+        "p1ratrulezzz/json-streaming-parser": "~6.0"
     },
     "require-dev": {
         "satooshi/php-coveralls": "~2.0",
