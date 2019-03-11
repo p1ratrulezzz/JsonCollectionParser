@@ -200,4 +200,17 @@ class Listener implements \JsonStreamingParser\Listener
     public function setParser(Parser $parser) {
       $this->parser = $parser;
     }
+    
+    public function readLineAlter(&$line) {
+      if ($this->getParser()->isFlagContinue()) {
+        $i = 0;
+        $len = strlen($line);
+        // Forwarding until object marker
+        while ($line[$i] != '{' && $i < $len) {
+          $i++;
+        }
+        
+        $line = '[' . mb_substr($line, $i);
+      }
+    }
 }

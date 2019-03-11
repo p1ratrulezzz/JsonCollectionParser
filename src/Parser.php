@@ -33,6 +33,8 @@ class Parser
     protected $stream;
   
     protected $fileStat;
+  
+    protected $flagContinue = false;
 
     public function __construct()
     {
@@ -49,12 +51,14 @@ class Parser
      */
     public function parse($input, $itemCallbackOrListener, $assoc = true)
     {
-        $this->stream = $stream = $this->openStream($input);
+        $this->stream = $this->openStream($input);
         $this->fileStat = stat($input);
         if (null !== ($offset = $this->getOption('offset'))) {
-          if (-1 == fseek($stream, $offset)) {
+          if (-1 == fseek($this->stream, $offset)) {
             throw new \Exception('Can\'t set correct offset of ' . $offset . ' bytes for the file');
           }
+          
+          $this->flagContinue = $offset > 0;
         }
 
         try {
@@ -69,7 +73,7 @@ class Parser
             
             $this->listener->setParser($this);
             $this->parser = new \JsonStreamingParser\Parser(
-                $stream,
+                $this->stream,
                 $this->listener,
                 $this->getOption('line_ending'),
                 $this->getOption('emit_whitespace'),
@@ -83,14 +87,23 @@ class Parser
             
             $this->parser->parse();
         } catch (\Exception $e) {
-            $this->gzipSupported ? gzclose($stream) : fclose($stream);
+            $this->closeStream();
             throw $e;
         }
-
-        $this->gzipSupported ? gzclose($stream) : fclose($stream);
     }
-
-    /**
+    
+    public function closeStream()
+    {
+      $this->gzipSupported ? gzclose($this->stream) : fclose($this->stream);
+    }
+    
+    public function __destruct()
+    {
+      $this->closeStream();
+      unset($this->parser);
+    }
+  
+  /**
      * @param string|resource $input File path or resource
      * @param callback|callable $itemCallback Callback
      *
@@ -188,11 +201,32 @@ class Parser
     }
     
     public function getPosition() {
-      return ftell($this->stream);
+      return $this->parser->getPosition();
+    }
+  
+    public function getPositionObject() {
+      return $this->parser->getPosition(\JsonStreamingParser\Parser::POSITION_OBJECT);
+    }
+    
+    public function getPositionArray() {
+      return $this->parser->getPosition(\JsonStreamingParser\Parser::POSITION_ARRAY);
     }
     
     public function getProgressPercent() {
       // 100 is max
-      return (($this->getPosition() * 100) / $this->fileStat['size']);
+      return (($this->getPosition('object') * 100) / $this->fileStat['size']);
+    }
+    
+    public function isFlagContinue($switch = TRUE) {
+      if ($this->flagContinue && $switch) {
+        $this->flagContinue = false;
+        return true;
+      }
+      
+      return $this->flagContinue;
+    }
+    
+    public function getBytesRead() {
+      return $this->parser->getBytesRead();
     }
 }
