@@ -94,7 +94,9 @@ class Parser
     
     public function closeStream()
     {
-      $this->gzipSupported ? gzclose($this->stream) : fclose($this->stream);
+      if (is_resource($this->stream)) {
+        $this->gzipSupported ? gzclose($this->stream) : fclose($this->stream);
+      }
     }
     
     public function __destruct()
