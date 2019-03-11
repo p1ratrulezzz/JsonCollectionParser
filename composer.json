@@ -9,11 +9,15 @@
         {
             "name": "Max Grigorian",
             "email": "maxakawizard@gmail.com"
+        },
+        {
+            "name": "P1ratRuleZZZ",
+            "email": "me@p1ratrulezzz.me"
         }
     ],
     "require": {
         "php": "^7.1",
-        "salsify/json-streaming-parser": "~6.0"
+        "p1ratrulezzz/json-streaming-parser": ">=6.0.5"
     },
     "require-dev": {
         "satooshi/php-coveralls": "~2.0",
