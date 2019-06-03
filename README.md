@@ -19,7 +19,7 @@ If you notice compliance oversights, please send a patch via pull request.
 ## Installation
 You will need [Composer](https://getcomposer.org/) to install the package
 ```bash
-composer require maxakawizard/json-collection-parser:~1.0
+composer require p1ratrulezzz/json-collection-parser ~1.5
 ```
 
 ## Input data format
