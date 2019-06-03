@@ -2,10 +2,10 @@
 [![Build Status](https://travis-ci.org/p1ratrulezzz/JsonCollectionParser.svg?branch=master)](https://travis-ci.org/p1ratrulezzz/JsonCollectionParser)
 [![SymfonyInsight](https://insight.symfony.com/projects/f1e0445a-a501-4d8c-81bc-a7f5971ab027/mini.svg)](https://insight.symfony.com/projects/f1e0445a-a501-4d8c-81bc-a7f5971ab027)
 
-[![GitHub tag](https://img.shields.io/github/tag/MAXakaWIZARD/JsonCollectionParser.svg?label=latest)](https://packagist.org/packages/maxakawizard/json-collection-parser) 
-[![Packagist](https://img.shields.io/packagist/dt/maxakawizard/json-collection-parser.svg)](https://packagist.org/packages/maxakawizard/json-collection-parser)
+[![Latest Stable Version](https://poser.pugx.org/p1ratrulezzz/json-collection-parser/v/stable)](https://packagist.org/packages/p1ratrulezzz/json-collection-parser)
+[![Total Downloads](https://poser.pugx.org/p1ratrulezzz/json-collection-parser/downloads)](https://packagist.org/packages/p1ratrulezzz/json-collection-parser)
+[![composer.lock](https://poser.pugx.org/p1ratrulezzz/json-collection-parser/composerlock)](https://packagist.org/packages/p1ratrulezzz/json-collection-parser)
 [![Minimum PHP Version](http://img.shields.io/badge/php-%3E%3D%207.1-8892BF.svg)](https://php.net/)
-[![License](https://img.shields.io/packagist/l/maxakawizard/json-collection-parser.svg)](https://packagist.org/packages/maxakawizard/json-collection-parser)
 
 Event-based parser for large JSON collections (consumes small amount of memory).
 Built on top of [JSON Streaming Parser](https://github.com/salsify/jsonstreamingparser)
