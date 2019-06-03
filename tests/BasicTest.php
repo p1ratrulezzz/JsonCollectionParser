@@ -157,7 +157,7 @@ class BasicTest extends TestCase
     public function testParseError()
     {
         $this->expectExceptionMessage(
-            'Parsing error in [3:5]. Start of string expected for object key. Instead got: i'
+            'Parsing error in [3:6]. Start of string expected for object key. Instead got: i'
         );
 
         $this->parser->parse(
