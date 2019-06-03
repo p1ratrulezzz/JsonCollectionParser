@@ -52,7 +52,7 @@ class Parser
     public function parse($input, $itemCallbackOrListener, $assoc = true)
     {
         $this->stream = $this->openStream($input);
-        $this->fileStat = stat($input);
+        $this->fileStat = fstat($this->stream);
         if (null !== ($offset = $this->getOption('offset'))) {
           if (-1 == fseek($this->stream, $offset)) {
             throw new \Exception('Can\'t set correct offset of ' . $offset . ' bytes for the file');
