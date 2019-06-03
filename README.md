@@ -1,6 +1,5 @@
 # JsonCollectionParser
 [![Build Status](https://travis-ci.org/p1ratrulezzz/JsonCollectionParser.svg?branch=master)](https://travis-ci.org/p1ratrulezzz/JsonCollectionParser)
-[![SymfonyInsight](https://insight.symfony.com/projects/f1e0445a-a501-4d8c-81bc-a7f5971ab027/mini.svg)](https://insight.symfony.com/projects/f1e0445a-a501-4d8c-81bc-a7f5971ab027)
 
 [![Latest Stable Version](https://poser.pugx.org/p1ratrulezzz/json-collection-parser/v/stable)](https://packagist.org/packages/p1ratrulezzz/json-collection-parser)
 [![Total Downloads](https://poser.pugx.org/p1ratrulezzz/json-collection-parser/downloads)](https://packagist.org/packages/p1ratrulezzz/json-collection-parser)
