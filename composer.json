@@ -2,7 +2,7 @@
     "name": "p1ratrulezzz/json-collection-parser",
     "description": "Streaming parser for large JSON files containing array of objects",
     "keywords": ["json"],
-    "homepage": "https://github.com/MAXakaWIZARD/JsonCollectionParser",
+    "homepage": "https://github.com/p1ratrulezzz/JsonCollectionParser",
     "type": "library",
     "license": "MIT",
     "authors": [
