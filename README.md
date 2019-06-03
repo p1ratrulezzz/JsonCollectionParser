@@ -1,9 +1,6 @@
 # JsonCollectionParser
-[![Build Status](https://api.travis-ci.org/MAXakaWIZARD/JsonCollectionParser.png?branch=master)](https://travis-ci.org/MAXakaWIZARD/JsonCollectionParser) 
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/MAXakaWIZARD/JsonCollectionParser/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/MAXakaWIZARD/JsonCollectionParser/?branch=master)
-[![Code Climate](https://codeclimate.com/github/MAXakaWIZARD/JsonCollectionParser/badges/gpa.svg)](https://codeclimate.com/github/MAXakaWIZARD/JsonCollectionParser)
-[![Coverage Status](https://coveralls.io/repos/MAXakaWIZARD/JsonCollectionParser/badge.svg?branch=master)](https://coveralls.io/r/MAXakaWIZARD/JsonCollectionParser?branch=master)
-[![SensioLabsInsight](https://insight.sensiolabs.com/projects/801d5faf-e753-4b5c-8a14-5795a1a4d239/mini.png)](https://insight.sensiolabs.com/projects/801d5faf-e753-4b5c-8a14-5795a1a4d239)
+[![Build Status](https://travis-ci.org/p1ratrulezzz/JsonCollectionParser.svg?branch=master)](https://travis-ci.org/p1ratrulezzz/JsonCollectionParser)
+[![SymfonyInsight](https://insight.symfony.com/projects/f1e0445a-a501-4d8c-81bc-a7f5971ab027/mini.svg)](https://insight.symfony.com/projects/f1e0445a-a501-4d8c-81bc-a7f5971ab027)
 
 [![GitHub tag](https://img.shields.io/github/tag/MAXakaWIZARD/JsonCollectionParser.svg?label=latest)](https://packagist.org/packages/maxakawizard/json-collection-parser) 
 [![Packagist](https://img.shields.io/packagist/dt/maxakawizard/json-collection-parser.svg)](https://packagist.org/packages/maxakawizard/json-collection-parser)
